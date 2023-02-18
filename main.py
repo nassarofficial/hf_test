@@ -11,6 +11,7 @@ from datasets import load_dataset
 import os
 import torch.nn as nn
 import torch.nn.functional as F
+import torchvision.transforms as transforms
 
 
 class Net(nn.Module):
