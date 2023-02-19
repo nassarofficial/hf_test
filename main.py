@@ -111,7 +111,7 @@ def load_train_objs():
     dataset = load_dataset("cifar10", cache_dir="/workspace").set_transform(transform)
 
     model = Net()
-    optimizer = torch.optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     criterion = nn.CrossEntropyLoss()
     return train_set, model, optimizer, criterion
 
