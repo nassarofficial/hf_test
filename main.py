@@ -109,7 +109,7 @@ def load_train_objs():
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
     # train_set = load_dataset("cifar10").set_transform(transform)
-    train_set = load_dataset("cifar10").set_transform(transform)
+    train_set = load_dataset("cifar10")
 
     model = Net()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
@@ -122,7 +122,6 @@ def prepare_dataloader(dataset: Dataset, batch_size: int):
     return DataLoader(
         dataset,
         batch_size=batch_size,
-        pin_memory=True,
         sampler=sampler
     )
 
