@@ -108,7 +108,7 @@ def load_train_objs():
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    dataset = load_dataset("cifar10").set_transform(transform)
+    dataset = load_dataset("cifar10", cache_dir="/workspace").set_transform(transform)
 
     model = Net()
     optimizer = torch.optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
