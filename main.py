@@ -102,14 +102,19 @@ class Trainer:
             if self.gpu_id == 0 and epoch % self.save_every == 0:
                 self._save_snapshot(epoch)
 
+def apply_transforms(examples):
+    transform = transforms.Compose(
+        [transforms.ToTensor(),
+         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+    examples["image"] = [transform(image) for image in examples["image"]]
+    return examples
 
 def load_train_objs():
-    transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
     # train_set = load_dataset("cifar10").set_transform(transform)
-    train_set = load_dataset("cifar10").set_transform(transform)["train"]
+    dataset = load_dataset("cifar10")
+    train_set = dataset["train"]
+    train_set.set_transform(apply_transforms)
 
     model = Net()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
