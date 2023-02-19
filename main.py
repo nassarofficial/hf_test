@@ -106,7 +106,7 @@ def apply_transforms(examples):
     transform = transforms.Compose(
         [transforms.ToTensor(),
          transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-    examples["image"] = [transform(image) for image in examples["image"]]
+    examples["img"] = [transform(image) for image in examples["img"]]
     return examples
 
 def load_train_objs():
