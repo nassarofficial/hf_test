@@ -12,7 +12,7 @@ import os
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-from datasets.distributed import split_dataset_by_node
+
 
 class Net(nn.Module):
     def __init__(self):
@@ -108,6 +108,7 @@ def load_train_objs():
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
+    # train_set = load_dataset("cifar10").set_transform(transform)
     train_set = load_dataset("cifar10").set_transform(transform)
 
     model = Net()
@@ -117,14 +118,12 @@ def load_train_objs():
 
 
 def prepare_dataloader(dataset: Dataset, batch_size: int):
-    ds = split_dataset_by_node(dataset, rank=int(os.environ["RANK"]), world_size=int(os.environ["WORLD_SIZE"]))
-
-
+    sampler = DistributedSampler(dataset)
     return DataLoader(
-        ds,
+        dataset,
         batch_size=batch_size,
         pin_memory=True,
-        shuffle=False,
+        sampler=sampler
     )
 
 
