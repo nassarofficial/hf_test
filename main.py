@@ -117,14 +117,14 @@ def load_train_objs():
 
 
 def prepare_dataloader(dataset: Dataset, batch_size: int):
-    
+    ds = split_dataset_by_node(dataset, rank=int(os.environ["RANK"]), world_size=int(os.environ["WORLD_SIZE"]))
+
 
     return DataLoader(
-        dataset,
+        ds,
         batch_size=batch_size,
         pin_memory=True,
         shuffle=False,
-        sampler=DistributedSampler(dataset)
     )
 
 
